@@ -3,10 +3,35 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UserService.Domain.Common;
+using UserService.Domain.ValueObjects;
 
 namespace UserService.Domain.Entities
 {
-    public class UserProfile
+    public class UserProfile : BaseEntity
     {
+        public string FullName { get; private set; }
+        public string? Bio { get; private set; }
+        public SocialLink? Instagram { get; private set; }
+        public SocialLink? Linkedin { get; private set; }
+        public Language PreferredLanguage { get; private set; }
+
+        private UserProfile() { }
+
+        public UserProfile(string fullName, string? bio, Language language)
+        {
+            FullName = fullName;
+            Bio = bio;
+            PreferredLanguage = language;
+        }
+        public void SetSocialLinks(SocialLink? instagram, SocialLink? linkedin)
+        {
+            Instagram = instagram;
+            Linkedin = linkedin;
+        }
+        public void UpdateBio(string? bio)
+        {
+            Bio = bio;
+        }
     }
 }
