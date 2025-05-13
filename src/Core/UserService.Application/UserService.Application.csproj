@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <Folder Include="DTOs\" />
+    <Folder Include="Abstractions\" />
+    <Folder Include="Validators\" />
   </ItemGroup>
 
   <PropertyGroup>
