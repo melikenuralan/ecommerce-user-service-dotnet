@@ -9,5 +9,7 @@ namespace UserService.Persistence.Identity
 {
     public class AppRole : IdentityRole<Guid>
     {
+        public AppRole(string roleName) : base(roleName) { }
+
     }
 }

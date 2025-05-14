@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UserService.Domain.Interfaces
 {
-    public interface IUserSettingsRepository
+    public interface IBlockedUserRepository
     {
     }
 }

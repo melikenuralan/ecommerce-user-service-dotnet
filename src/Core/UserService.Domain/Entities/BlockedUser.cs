@@ -11,6 +11,7 @@ namespace UserService.Domain.Entities
     {
         public Guid UserId { get; private set; }         // engelleyen
         public Guid BlockedUserId { get; private set; }  // engellenen
+
         public DateTime BlockedAt { get; private set; }
 
         private BlockedUser() { }

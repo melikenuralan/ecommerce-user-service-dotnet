@@ -10,15 +10,15 @@ namespace UserService.Domain.Entities
 {
     public class UserProfile : BaseEntity
     {
-        public string FullName { get; private set; }
+        public FullName FullName { get; private set; }
         public string? Bio { get; private set; }
         public SocialLink? Instagram { get; private set; }
         public SocialLink? Linkedin { get; private set; }
-        public Language PreferredLanguage { get; private set; }
+        public LanguagePreference PreferredLanguage { get; private set; }
 
         private UserProfile() { }
 
-        public UserProfile(string fullName, string? bio, Language language)
+        public UserProfile(FullName fullName, string? bio, LanguagePreference language)
         {
             FullName = fullName;
             Bio = bio;

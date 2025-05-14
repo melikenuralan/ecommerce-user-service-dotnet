@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UserService.Domain.Interfaces
+namespace UserService.Domain.ValueObjects
 {
-    public interface IUserSettingsRepository
+    public class FullName
     {
     }
 }
