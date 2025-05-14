@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
+using UserService.Domain.Interfaces;
 
 namespace UserService.API.Controllers
 {
@@ -8,16 +9,22 @@ namespace UserService.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        //        UserController
-        //GET /users/{id
-        //    }
-        //    GET /users/username/{username
-        //}
+        //Örnek bir endpoint !!
+        private readonly IUserRepository _userRepository;
 
-        //PUT / users /{ id} – (İsim, kullanıcı adı, e - posta güncelleme)
+        public UsersController(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
 
-        //DELETE /users/{id} – Hesap silme
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(Guid id)
+        {
+            var user = await _userRepository.GetById(id);
 
-        //👤 Temel kullanıcı verileri
+            if (user is null) return NotFound();
+
+            return Ok(user);
+        }
     }
 }
