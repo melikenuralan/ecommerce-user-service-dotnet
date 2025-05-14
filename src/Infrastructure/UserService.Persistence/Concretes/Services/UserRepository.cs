@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Entities;
 using UserService.Domain.Interfaces;
 using UserService.Domain.ValueObjects;
@@ -15,30 +16,29 @@ namespace UserService.Persistence.Concretes.Services
         private readonly UserServiceDbContext _context;
         public UserRepository(UserServiceDbContext context) => _context = context;
         public void AddUser(User user) => _context.DomainUsers.Add(user);
+        public void Remove(User user) => _context.DomainUsers.Remove(user);
+        public void Update(User user) => _context.DomainUsers.Update(user);
 
-        public Task<bool> ExitAsync(Guid id)
+        public async Task<bool> ExitAsync(Guid id)
         {
-            throw new NotImplementedException();
+            return await _context.DomainUsers
+                .AsNoTracking()
+                .AnyAsync(u => u.Id == id);
         }
 
-        public Task<User?> GetByEmailAsync(Email email)
+        public async Task<User?> GetByEmailAsync(Email email)
         {
-            throw new NotImplementedException();
+            return await _context.DomainUsers
+                .AsNoTracking()
+                .FirstOrDefaultAsync(u => u.Email == email);
         }
 
-        public Task<User?> GetById(Guid id)
+        public async Task<User?> GetById(Guid id)
         {
-            throw new NotImplementedException();
-        }
-
-        public void Remove(User user)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(User user)
-        {
-            throw new NotImplementedException();
+            return await _context.DomainUsers
+            .Include(u => u.BlockedUsers)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Id == id);
         }
     }
 }
