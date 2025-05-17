@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using UserService.Application.Abstractions.IServices;
 using UserService.Domain.Interfaces;
 using UserService.Persistence.Concretes.Services;
 using UserService.Persistence.Data;
@@ -23,6 +24,7 @@ namespace UserService.Persistence
             services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<UserServiceDbContext>();
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAuthService, AuthService>();
         }
     }
 }

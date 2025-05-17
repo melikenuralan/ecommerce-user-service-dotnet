@@ -9,7 +9,7 @@ namespace UserService.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        //Örnek bir endpoint !!
+        
         private readonly IUserRepository _userRepository;
 
         public UsersController(IUserRepository userRepository)
