@@ -23,8 +23,9 @@ namespace UserService.Domain.Entities
 
         private User() { }
 
-        public User(Email email, FullName fullName)
+        public User(Guid id , Email email, FullName fullName)
         {
+            Id = id;
             Email = email;
             FullName = fullName;
             Theme = ThemePreference.System;

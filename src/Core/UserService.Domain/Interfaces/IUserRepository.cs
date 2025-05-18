@@ -17,6 +17,8 @@ namespace UserService.Domain.Interfaces
         Task<bool> ExitAsync(Guid id);
 
         void AddUser(User user);
+        Task AddAsync(User user);
+
         void Remove(User user);
         void Update(User user);
     }

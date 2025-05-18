@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UserService.Application.DTOs
+namespace UserService.Application.Features.Commands.UserAuth.LoginUser
 {
-    public class LoginRequest
+    public class LoginUserCommandResponse
     {
     }
 }

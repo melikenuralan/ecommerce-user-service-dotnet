@@ -1,8 +1,11 @@
 using UserService.Persistence;
 using Serilog;
+using UserService.Infrastructure;
 
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddInfrastructureServices();
 
 builder.Services.AddPersistenceService(builder.Configuration);
 

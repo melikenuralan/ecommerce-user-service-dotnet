@@ -5,7 +5,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Commands\" />
+    <Folder Include="Features\Commands\UserAuth\UpdateUser\" />
+    <Folder Include="Features\Commands\UserAuth\RemoveUser\" />
     <Folder Include="Mappings\" />
     <Folder Include="Validators\" />
   </ItemGroup>

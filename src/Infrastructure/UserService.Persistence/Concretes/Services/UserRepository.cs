@@ -40,5 +40,11 @@ namespace UserService.Persistence.Concretes.Services
             .AsNoTracking()
             .FirstOrDefaultAsync(u => u.Id == id);
         }
+
+        public async Task AddAsync(User user)
+        {
+            await _context.DomainUsers.AddAsync(user);
+        }
+
     }
 }
