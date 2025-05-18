@@ -1,13 +1,20 @@
 using UserService.Persistence;
 using Serilog;
 using UserService.Infrastructure;
+using UserService.Application.Features.Commands.UserAuth.LoginUser;
+using UserService.Application.Features.Commands.UserAuth.RegisterUser;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddInfrastructureServices();
+
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 builder.Services.AddPersistenceService(builder.Configuration);
+
+
+builder.Services.AddScoped<LoginUserCommandHandler>();
+builder.Services.AddScoped<RegisterUserCommandHandler>();
 
 
 ///serilog configuration --------
@@ -38,6 +45,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

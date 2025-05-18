@@ -5,6 +5,7 @@ namespace UserService.Domain.Entities
 {
     public class User : BaseEntity, IAggregateRoot
     {
+
         public Email Email { get; private set; }
         public FullName FullName { get; private set; }
 

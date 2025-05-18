@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using System.Reflection.Emit;
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Entities;
@@ -19,7 +20,7 @@ namespace UserService.Persistence.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
+         
             base.OnModelCreating(builder);
 
         }

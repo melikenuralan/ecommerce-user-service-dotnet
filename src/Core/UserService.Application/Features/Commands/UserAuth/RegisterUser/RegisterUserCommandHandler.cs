@@ -7,11 +7,19 @@ namespace UserService.Application.Features.Commands.UserAuth.RegisterUser
     public class RegisterUserCommandHandler
     {
         private readonly IAuthService _authService;
-        public RegisterUserCommandHandler(IAuthService authService) => _authService = authService;
+        private readonly ILogService _logger;
 
-        public async Task<RegisterUserCommandResponse> HandleAsync(RegisterUserCommandRequest request,CancellationToken cancellationToken)
+        public RegisterUserCommandHandler(IAuthService authService, ILogService logger)
         {
-            AuthResultDto response = await _authService.RegisterAsync(new()
+            _authService = authService;
+            _logger = logger;
+        }
+
+        public async Task<RegisterUserCommandResponse> HandleAsync(RegisterUserCommandRequest request, CancellationToken cancellationToken)
+        {
+            _logger.Info($"[REGISTER] Yeni kullanıcı kayıt denemesi: {request.Username}");
+
+            var response = await _authService.RegisterAsync(new()
             {
                 Email = request.Email,
                 FullName = request.FullName,
@@ -20,12 +28,21 @@ namespace UserService.Application.Features.Commands.UserAuth.RegisterUser
                 Username = request.Username
             });
 
+            if (!response.Succeeded)
+            {
+                string joinedErrors = string.Join(" | ", response.Errors!);
+                _logger.Warning($"[REGISTER] Kayıt başarısız: {joinedErrors}");
+            }
+            else
+            {
+                _logger.Info($"[REGISTER] Kayıt başarılı: {request.Username}");
+            }
+
             return new RegisterUserCommandResponse
             {
-                Succeeded = response.Succeeded,
+                Succeess = response.Succeeded,
                 Message = response.Succeeded ? "Kayıt başarılı" : string.Join(" | ", response.Errors!)
             };
         }
-
     }
 }

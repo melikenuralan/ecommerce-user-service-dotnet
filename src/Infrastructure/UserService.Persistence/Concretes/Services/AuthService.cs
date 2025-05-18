@@ -27,14 +27,25 @@ namespace UserService.Persistence.Concretes.Services
         }
 
 
-        public Task<AuthResultDto> LoginAsync(LoginRequestDto request)
+        public async Task<AuthResultDto> LoginAsync(LoginRequestDto request)
         {
-            throw new NotImplementedException();
-        }
+            AppUser? appUser = await _userManager.FindByNameAsync(request.Username);
+            if (appUser == null)
+                return AuthResultDto.Failure("Kullanıcı adı veya şifre hatalı.");
+            bool passwordValid = await _userManager.CheckPasswordAsync(appUser, request.Password);
+            if (!passwordValid)
+                return AuthResultDto.Failure("Kullanıcı adı veya şifre hatalı.");
 
-        public Task LogoutAsync()
-        {
-            throw new NotImplementedException();
+            IList<string> roles = await _userManager.GetRolesAsync(appUser);
+
+            TokenDto token = _tokenService.GenerateToken(
+                60,
+                appUser.Id.ToString(),
+                appUser.UserName,
+                roles
+            );
+
+            return AuthResultDto.Success(token);
         }
 
         public async Task<AuthResultDto> RegisterAsync(RegisterRequestDto request)

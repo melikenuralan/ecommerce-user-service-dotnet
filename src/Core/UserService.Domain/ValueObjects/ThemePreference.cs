@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UserService.Domain.Common;
+﻿using UserService.Domain.Common;
 
 namespace UserService.Domain.ValueObjects
 {
     public class ThemePreference : ValueObject
     {
-
         public static readonly ThemePreference Light = new("light");
         public static readonly ThemePreference Dark = new("dark");
         public static readonly ThemePreference System = new("system");
 
-        public string Value { get; }
+        public string Value { get; private set; } = null!; // EF Core için gereklidir
+
+        // EF Core için gerekli parametresiz ctor
+        private ThemePreference() { }
 
         private ThemePreference(string value)
         {

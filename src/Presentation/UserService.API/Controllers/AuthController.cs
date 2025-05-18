@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Win32;
+using UserService.Application.Features.Commands.UserAuth.LoginUser;
+using UserService.Application.Features.Commands.UserAuth.RegisterUser;
 
 namespace UserService.API.Controllers
 {
@@ -8,18 +10,49 @@ namespace UserService.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly LoginUserCommandHandler _loginHandler;
+        private readonly RegisterUserCommandHandler _registerHandler;
 
-//        AuthController
-//POST /auth/register
+        public AuthController(LoginUserCommandHandler loginHandler, RegisterUserCommandHandler registerHandler = null)
+        {
+            _loginHandler = loginHandler;
+            _registerHandler = registerHandler;
+        }
 
-//POST /auth/login
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginUserCommandRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _loginHandler.HandleAsync(request, cancellationToken);
+            if (!result.Success)
+                return BadRequest(result.Message);
 
-//POST /auth/refresh-token
+            return Ok(result.Token);
+        }
 
-//POST /auth/logout
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody] RegisterUserCommandRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _registerHandler.HandleAsync(request, cancellationToken);
+            if (!result.Succeess)
+                return BadRequest(result.Message);
 
-//POST /auth/forgot-password
-
-//POST /auth/reset-password
+            return Ok(result.Message);
+        }
     }
+
+
+
+
+    //        AuthController
+    //POST /auth/register
+
+    //POST /auth/login
+
+    //POST /auth/refresh-token
+
+    //POST /auth/logout
+
+    //POST /auth/forgot-password
+
+    //POST /auth/reset-password
 }
