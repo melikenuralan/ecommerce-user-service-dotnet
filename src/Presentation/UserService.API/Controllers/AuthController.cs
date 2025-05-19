@@ -24,7 +24,7 @@ namespace UserService.API.Controllers
         {
             var result = await _loginHandler.HandleAsync(request, cancellationToken);
             if (!result.Success)
-                return BadRequest(result.Message);
+                return BadRequest(new { error = result.Message });
 
             return Ok(result.Token);
         }
@@ -39,20 +39,4 @@ namespace UserService.API.Controllers
             return Ok(result.Message);
         }
     }
-
-
-
-
-    //        AuthController
-    //POST /auth/register
-
-    //POST /auth/login
-
-    //POST /auth/refresh-token
-
-    //POST /auth/logout
-
-    //POST /auth/forgot-password
-
-    //POST /auth/reset-password
 }

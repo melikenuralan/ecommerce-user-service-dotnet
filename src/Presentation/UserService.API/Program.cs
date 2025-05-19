@@ -17,9 +17,21 @@ builder.Services.AddScoped<LoginUserCommandHandler>();
 builder.Services.AddScoped<RegisterUserCommandHandler>();
 
 
-builder.WebHost.ConfigureKestrel(serverOptions =>
+//builder.WebHost.ConfigureKestrel(serverOptions =>
+//{
+//    serverOptions.ListenAnyIP(5000); // HTTP
+//});
+
+builder.Services.AddCors(options =>
 {
-    serverOptions.ListenAnyIP(5000); // HTTP
+    options.AddPolicy(name: "AllowSwagger",
+        policy =>
+        {
+            policy
+              .WithOrigins("http://localhost:5000", "https://localhost:5001")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+        });
 });
 
 ///serilog configuration --------

@@ -8,6 +8,7 @@ using UserService.Domain.Common;
 
 namespace UserService.Domain.ValueObjects
 {
+
     public class Email : ValueObject
     {
         public string Value { get; private set; }

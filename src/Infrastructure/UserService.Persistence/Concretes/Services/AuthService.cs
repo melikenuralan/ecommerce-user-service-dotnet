@@ -72,14 +72,6 @@ namespace UserService.Persistence.Concretes.Services
                 return AuthResultDto.Failure(errors.ToArray());
             }
 
-            var domainUser = new Domain.Entities.User(
-                appUser.Id,
-                new Email(request.Email),
-                new FullName(request.FullName)
-            );
-
-            await _userRepository.AddAsync(domainUser);
-
             var roles = await _userManager.GetRolesAsync(appUser);
 
             TokenDto token = _tokenService.GenerateToken(

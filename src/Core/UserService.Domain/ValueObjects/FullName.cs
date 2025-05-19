@@ -9,23 +9,27 @@ namespace UserService.Domain.ValueObjects
 {
     public class FullName : ValueObject
     {
-        public string Value { get; }
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
 
         private FullName() { } // EF için
 
-        public FullName(string value)
+        public FullName(string firstName, string lastName)
         {
-            if (string.IsNullOrWhiteSpace(value))
-                throw new ArgumentException("İsim boş olamaz.");
-            Value = value;
+            if (string.IsNullOrWhiteSpace(firstName) || string.IsNullOrWhiteSpace(lastName))
+                throw new ArgumentException("Ad ve soyad boş olamaz.");
+
+            FirstName = firstName;
+            LastName = lastName;
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            yield return Value;
+            yield return FirstName;
+            yield return LastName;
         }
 
-        public override string ToString() => Value;
+        public override string ToString() => $"{FirstName} {LastName}";
     }
 
 }

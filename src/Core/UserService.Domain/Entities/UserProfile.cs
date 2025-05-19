@@ -14,15 +14,13 @@ namespace UserService.Domain.Entities
         public string? Bio { get; private set; }
         public SocialLink? Instagram { get; private set; }
         public SocialLink? Linkedin { get; private set; }
-        public LanguagePreference PreferredLanguage { get; private set; }
-
         private UserProfile() { }
 
-        public UserProfile(FullName fullName, string? bio, LanguagePreference language)
+        public UserProfile(Guid id, FullName fullName, string? bio)
         {
+            Id = id;
             FullName = fullName;
             Bio = bio;
-            PreferredLanguage = language;
         }
         public void SetSocialLinks(SocialLink? instagram, SocialLink? linkedin)
         {
