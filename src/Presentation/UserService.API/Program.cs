@@ -17,6 +17,11 @@ builder.Services.AddScoped<LoginUserCommandHandler>();
 builder.Services.AddScoped<RegisterUserCommandHandler>();
 
 
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(5000); // HTTP
+});
+
 ///serilog configuration --------
 Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
@@ -38,8 +43,8 @@ var app = builder.Build();
 
 
 
-if (app.Environment.IsDevelopment())
-{
+ if (app.Environment.IsDevelopment())
+ {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
