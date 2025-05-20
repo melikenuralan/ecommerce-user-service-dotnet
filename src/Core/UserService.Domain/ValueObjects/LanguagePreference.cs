@@ -7,7 +7,7 @@ using UserService.Domain.Common;
 
 namespace UserService.Domain.ValueObjects
 {
-    public class LanguagePreference : ValueObject
+    public sealed class LanguagePreference : ValueObject
     {
         public string Code { get; private set; }
         public string Name { get; private set; }

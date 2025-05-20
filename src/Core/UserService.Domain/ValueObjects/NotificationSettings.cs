@@ -7,7 +7,7 @@ using UserService.Domain.Common;
 
 namespace UserService.Domain.ValueObjects
 {
-    public class NotificationSettings : ValueObject
+    public sealed class NotificationSettings : ValueObject
     {
         public bool ReceivePromotions { get; private set; }
         public bool ReceiveOrderUpdates { get; private set; }

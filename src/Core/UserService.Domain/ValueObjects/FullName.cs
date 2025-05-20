@@ -7,7 +7,7 @@ using UserService.Domain.Common;
 
 namespace UserService.Domain.ValueObjects
 {
-    public class FullName : ValueObject
+    public sealed class FullName : ValueObject
     {
         public string FirstName { get; private set; }
         public string LastName { get; private set; }

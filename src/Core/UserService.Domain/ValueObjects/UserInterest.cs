@@ -7,9 +7,9 @@ using UserService.Domain.Common;
 
 namespace UserService.Domain.ValueObjects
 {
-    public class UserInterest : ValueObject
+    public sealed class UserInterest : ValueObject
     {
-        public string Category { get; private set; }// Örn: "Music", "Books"
+        public string Category { get; private set; }
         private UserInterest() { }
 
         public UserInterest(string category)
