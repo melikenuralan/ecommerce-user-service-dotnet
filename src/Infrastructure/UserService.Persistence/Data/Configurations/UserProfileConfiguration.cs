@@ -1,0 +1,65 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Microsoft.EntityFrameworkCore;
+using UserService.Domain.Entities;
+
+namespace UserService.Persistence.Data.Configurations
+{
+    public class UserProfileConfiguration : IEntityTypeConfiguration<UserProfile>
+    {
+        public void Configure(EntityTypeBuilder<UserProfile> builder)
+        {
+            builder.ToTable("UserProfiles");
+            builder.HasKey(p => p.Id);
+
+            // 1-to-1: User.Id ↔ UserProfile.Id
+            builder.HasOne<User>()
+                   .WithOne(u => u.Profile)
+                   .HasForeignKey<UserProfile>(p => p.Id);
+
+            // VO: FullName
+            builder.OwnsOne(p => p.FullName, name =>
+            {
+                name.Property(n => n.FirstName)
+                    .HasColumnName("FirstName")
+                    .IsRequired()
+                    .HasMaxLength(100);
+                name.Property(n => n.LastName)
+                    .HasColumnName("LastName")
+                    .IsRequired()
+                    .HasMaxLength(100);
+            });
+
+            // VO: Instagram
+            builder.OwnsOne(p => p.Instagram, ig =>
+            {
+                ig.Property(x => x.Platform)
+                  .HasColumnName("InstagramPlatform")
+                  .HasMaxLength(50);
+                ig.Property(x => x.Url)
+                  .HasColumnName("InstagramUrl")
+                  .HasMaxLength(200);
+            });
+
+            // VO: LinkedIn
+            builder.OwnsOne(p => p.Linkedin, ln =>
+            {
+                ln.Property(x => x.Platform)
+                  .HasColumnName("LinkedInPlatform")
+                  .HasMaxLength(50);
+                ln.Property(x => x.Url)
+                  .HasColumnName("LinkedInUrl")
+                  .HasMaxLength(200);
+            });
+
+            // Basit property: Bio
+            builder.Property(p => p.Bio)
+                   .HasColumnName("Bio")
+                   .HasMaxLength(1000);
+        }
+    }
+}

@@ -14,12 +14,13 @@ namespace UserService.Persistence
     {
         public static void AddPersistenceService(this IServiceCollection services, IConfiguration configuration)
         {
-            var connectionString = Environment.GetEnvironmentVariable("UserDbConnection");
-            if (string.IsNullOrWhiteSpace(connectionString))
-                throw new Exception("UserDbConnection environment variable not set.");
+            var connectionString = configuration
+                                     .GetConnectionString("UserDbConnection")
+                                     ?? throw new InvalidOperationException("ConnectionStrings:UserDbConnection tanımlı değil.");
 
-            services.AddDbContext<UserServiceDbContext>(options =>
-                                                                options.UseNpgsql(connectionString));
+            services.AddDbContext<UserServiceDbContext>(opts =>
+                                      opts.UseNpgsql(connectionString));
+
 
             services.AddIdentity<AppUser, AppRole>().AddEntityFrameworkStores<UserServiceDbContext>();
 

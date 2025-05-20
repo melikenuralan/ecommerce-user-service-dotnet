@@ -1,14 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\UserService.Domain\UserService.Domain.csproj" />
+    <Compile Remove="Features\Commands\UserAuth\RemoveUser\**" />
+    <Compile Remove="Features\Commands\UserAuth\UpdateUser\**" />
+    <Compile Remove="Mappings\**" />
+    <Compile Remove="Validators\**" />
+    <EmbeddedResource Remove="Features\Commands\UserAuth\RemoveUser\**" />
+    <EmbeddedResource Remove="Features\Commands\UserAuth\UpdateUser\**" />
+    <EmbeddedResource Remove="Mappings\**" />
+    <EmbeddedResource Remove="Validators\**" />
+    <None Remove="Features\Commands\UserAuth\RemoveUser\**" />
+    <None Remove="Features\Commands\UserAuth\UpdateUser\**" />
+    <None Remove="Mappings\**" />
+    <None Remove="Validators\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Commands\UserAuth\UpdateUser\" />
-    <Folder Include="Features\Commands\UserAuth\RemoveUser\" />
-    <Folder Include="Mappings\" />
-    <Folder Include="Validators\" />
+    <ProjectReference Include="..\UserService.Domain\UserService.Domain.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
