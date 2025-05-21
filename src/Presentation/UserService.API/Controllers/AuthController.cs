@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Win32;
 using UserService.Application.Features.Commands.UserAuth.LoginUser;
@@ -8,6 +9,8 @@ namespace UserService.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Admin")]
+
     public class AuthController : ControllerBase
     {
         private readonly LoginUserCommandHandler _loginHandler;
