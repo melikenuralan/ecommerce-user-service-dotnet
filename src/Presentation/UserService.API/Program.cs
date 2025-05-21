@@ -3,6 +3,7 @@ using Serilog;
 using UserService.Infrastructure;
 using UserService.Application.Features.Commands.UserAuth.LoginUser;
 using UserService.Application.Features.Commands.UserAuth.RegisterUser;
+using Microsoft.OpenApi.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,32 @@ builder.Services.AddPersistenceService(builder.Configuration);
 
 builder.Services.AddScoped<LoginUserCommandHandler>();
 builder.Services.AddScoped<RegisterUserCommandHandler>();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "UserService", Version = "v1" });
+
+    var securitySchema = new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Description = "JWT Authorization header using the Bearer scheme.",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT"
+    };
+
+    c.AddSecurityDefinition("Bearer", securitySchema);
+
+    var securityRequirement = new OpenApiSecurityRequirement
+    {
+        {
+            securitySchema,
+            new[] { "Bearer" }
+        }
+    };
+
+    c.AddSecurityRequirement(securityRequirement);
+});
 
 
 //builder.WebHost.ConfigureKestrel(serverOptions =>

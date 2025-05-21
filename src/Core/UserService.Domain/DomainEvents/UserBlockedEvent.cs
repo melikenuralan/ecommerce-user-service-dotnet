@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace UserService.Domain.DomainEvents
 {
-    internal class UserBlockedEvent
+    public class UserBlockedEvent
     {
     }
 }

@@ -47,41 +47,54 @@ namespace UserService.Persistence.Concretes.Services
 
             return AuthResultDto.Success(token);
         }
+        private string GenerateReferralCode()
+        {
+            return Guid.NewGuid().ToString("N")[..8].ToUpper(); // 8 karakterlik benzersiz bir kod
+        }
+
 
         public async Task<AuthResultDto> RegisterAsync(RegisterRequestDto request)
         {
-            if (request.Password != request.PasswordConfirm)
-                return AuthResultDto.Failure("Şifreler uyuşmuyor.");
-
-            var appUser = new AppUser
+            try
             {
-                Id = Guid.NewGuid(),
-                Email = request.Email,
-                UserName = request.Username,
-                IsEmailVerified = false,
-                IsPhoneVerified = false
-            };
+                if (request.Password != request.PasswordConfirm)
+                    return AuthResultDto.Failure("Şifreler uyuşmuyor.");
 
-            IdentityResult identityResult = await _userManager.CreateAsync(appUser, request.Password);
-            if (!identityResult.Succeeded)
-            {
-                List<string> errors = identityResult.Errors
-                    .Select(e => e.Description)
-                    .ToList();
+                var appUser = new AppUser
+                {
+                    Id = Guid.NewGuid(),
+                    Email = request.Email,
+                    UserName = request.Username,
+                    IsEmailVerified = false,
+                    IsPhoneVerified = false,
+                    ReferralCode = GenerateReferralCode()
+                };
 
-                return AuthResultDto.Failure(errors.ToArray());
+                IdentityResult identityResult = await _userManager.CreateAsync(appUser, request.Password);
+                if (!identityResult.Succeeded)
+                {
+                    List<string> errors = identityResult.Errors
+                        .Select(e => e.Description)
+                        .ToList();
+
+                    return AuthResultDto.Failure(errors.ToArray());
+                }
+
+                var roles = await _userManager.GetRolesAsync(appUser);
+
+                TokenDto token = _tokenService.GenerateToken(
+                    60,
+                    appUser.Id.ToString(),
+                    appUser.UserName,
+                    roles
+                );
+
+                return AuthResultDto.Success(token);
             }
-
-            var roles = await _userManager.GetRolesAsync(appUser);
-
-            TokenDto token = _tokenService.GenerateToken(
-                60,
-                appUser.Id.ToString(),
-                appUser.UserName,
-                roles
-            );
-
-            return AuthResultDto.Success(token);
+            catch (Exception ex)
+            {
+                throw new Exception("Bir hata oluştu.", ex);
+            }
         }
     }
 }

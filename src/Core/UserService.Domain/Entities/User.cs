@@ -5,7 +5,6 @@ namespace UserService.Domain.Entities
 {
     public class User : BaseEntity, IAggregateRoot
     {
-
         public Email Email { get; private set; }
         public FullName FullName { get; private set; }
         public bool IsEmailVerified { get; private set; }
@@ -36,7 +35,6 @@ namespace UserService.Domain.Entities
             Profile = new UserProfile(id, fullName, bio: null);
             Settings = UserSettings.CreateDefault(id);
         }
-
 
         public void ChangeFullName(FullName newName)
         {
