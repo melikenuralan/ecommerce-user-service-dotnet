@@ -9,7 +9,7 @@ using UserService.Domain.Interfaces;
 using UserService.Domain.ValueObjects;
 using UserService.Persistence.Data;
 
-namespace UserService.Persistence.Concretes.Services
+namespace UserService.Persistence.Concretes.Repositories
 {
     public class UserRepository : IUserRepository
     {
@@ -45,6 +45,5 @@ namespace UserService.Persistence.Concretes.Services
         {
             await _context.DomainUsers.AddAsync(user);
         }
-
     }
 }
