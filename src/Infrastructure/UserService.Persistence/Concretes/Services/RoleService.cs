@@ -20,13 +20,13 @@ namespace UserService.Persistence.Concretes.Services
             _userManager = userManager;
         }
 
-        public async Task<bool> CreateRole(string name)
+        public async Task<bool> CreateRoleAsync(string name)
         {
             IdentityResult result = await _roleManager.CreateAsync(new AppRole(name));
             return result.Succeeded;
         }
 
-        public async Task<bool> DeleteRole(Guid id)
+        public async Task<bool> DeleteRoleAsync(Guid id)
         {
             AppRole? appRole = await _roleManager.FindByIdAsync(id.ToString());
             IdentityResult result = await _roleManager.DeleteAsync(appRole);
@@ -38,12 +38,12 @@ namespace UserService.Persistence.Concretes.Services
             return _roleManager.Roles.ToDictionary(role => role.Id, role => role.Name);
 
         }
-        public async Task<(Guid id, string name)> GetRoleById(Guid id)
+        public async Task<(Guid id, string name)> GetRoleByIdAsync(Guid id)
         {
             var role = await _roleManager.FindByIdAsync(id.ToString());
             return (id, role.Name);
         }
-        public async Task<bool> UpdateRole(Guid id, string name)
+        public async Task<bool> UpdateRoleAsync(Guid id, string name)
         {
             AppRole? role = await _roleManager.FindByIdAsync(id.ToString());
             role.Name = name;

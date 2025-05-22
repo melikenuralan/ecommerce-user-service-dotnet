@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace UserService.Application.Features.Commands.Roles.CreateRole
 {
-    public class CreateRoleCommandReponse
+    public class CreateRoleCommandResponse
     {
+        public Guid Id { get; set; }
+        public bool Succeeded { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }
