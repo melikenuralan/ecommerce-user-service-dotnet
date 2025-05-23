@@ -11,8 +11,8 @@ namespace UserService.Application.Abstractions.IServices
     {
         IDictionary<Guid, string> GetAllRoles();
         Task<(Guid id, string name)> GetRoleByIdAsync(Guid id);
-        Task<bool> CreateRoleAsync(string name);
-        Task<bool> UpdateRoleAsync(Guid id, string name);
+        Task<RoleDto> CreateRoleAsync(string name);
+        Task<RoleDto> UpdateRoleAsync(Guid id, string name);
         Task<bool> DeleteRoleAsync(Guid id);
     }
 }

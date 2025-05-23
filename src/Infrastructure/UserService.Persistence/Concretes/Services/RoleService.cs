@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using UserService.Application.Abstractions.IServices;
+using UserService.Application.DTOs;
 using UserService.Persistence.Identity;
 
 namespace UserService.Persistence.Concretes.Services
@@ -20,10 +21,22 @@ namespace UserService.Persistence.Concretes.Services
             _userManager = userManager;
         }
 
-        public async Task<bool> CreateRoleAsync(string name)
+        public async Task<RoleDto> CreateRoleAsync(string name)
         {
-            IdentityResult result = await _roleManager.CreateAsync(new AppRole(name));
-            return result.Succeeded;
+            AppRole role = new AppRole(name);
+            IdentityResult result = await _roleManager.CreateAsync(role);
+            if (!result.Succeeded)
+            {
+                string errors = string.Join("; ", result.Errors.Select(e => e.Description));
+                throw new InvalidOperationException($"Role creation failed: {errors}");
+            }
+            RoleDto dto = new RoleDto
+            {
+                Id = role.Id,
+                Name = role.Name,
+                Permissions = new List<string>()
+            };
+            return dto;
         }
 
         public async Task<bool> DeleteRoleAsync(Guid id)
@@ -43,12 +56,29 @@ namespace UserService.Persistence.Concretes.Services
             var role = await _roleManager.FindByIdAsync(id.ToString());
             return (id, role.Name);
         }
-        public async Task<bool> UpdateRoleAsync(Guid id, string name)
+        public async Task<RoleDto> UpdateRoleAsync(Guid id, string name)
         {
             AppRole? role = await _roleManager.FindByIdAsync(id.ToString());
+            if (role is null)
+                throw new KeyNotFoundException($"Role with Id {id} not found.");
+
             role.Name = name;
+
             IdentityResult result = await _roleManager.UpdateAsync(role);
-            return result.Succeeded;
+            if (!result.Succeeded)
+            {
+                string errors = string.Join("; ", result.Errors.Select(e => e.Description));
+                throw new InvalidOperationException($"Role update failed: {errors}");
+            }
+
+            RoleDto dto = new RoleDto
+            {
+                Id = role.Id,
+                Name = role.Name,
+                Permissions =
+                    new List<string>()
+            };
+            return dto;
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UserService.Application.Abstractions.IServices;
+using UserService.Application.DTOs;
 
 namespace UserService.Application.Features.Commands.Roles.CreateRole
 {
@@ -27,31 +28,16 @@ namespace UserService.Application.Features.Commands.Roles.CreateRole
 
             _logger.Info($"[CreateRole] Başlatılıyor: {request.Name}");
 
+            RoleDto createdRole = await _roleService.CreateRoleAsync(request.Name);
 
-            // IRoleService.CreateRoleAsync'unü dönüş tipi RoleId ise ona göre ayarla
-            bool created = await _roleService.CreateRoleAsync(request.Name);
+            _logger.Info($"[CreateRole] Başarılı: {createdRole.Name} {createdRole.Id}");
 
-
-            if (created)
+            return new CreateRoleCommandResponse
             {
-                _logger.Info($"[CreateRole] Başarılı: {request.Name}");
-
-
-                return new CreateRoleCommandResponse
-                {
-                    Succeeded = true,
-                    ErrorMessage = null
-                };
-            }
-            else
-            {
-                _logger.Error($"[CreateRole] Hata: {request.Name}");
-                return new CreateRoleCommandResponse
-                {
-                    Succeeded = false,
-                    ErrorMessage = null
-                };
-            }
+                Succeeded = true,
+                ErrorMessage = null,
+                RoleId = createdRole.Id
+            };
         }
     }
 }

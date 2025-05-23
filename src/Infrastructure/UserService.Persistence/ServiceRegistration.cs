@@ -27,6 +27,7 @@ namespace UserService.Persistence
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IRoleService, RoleService>();
         }
     }
 }
