@@ -5,6 +5,7 @@ using UserService.Application.Features.Commands.UserAuth.LoginUser;
 using UserService.Application.Features.Commands.UserAuth.RegisterUser;
 using Microsoft.OpenApi.Models;
 using UserService.API.Extensions;
+using System.Reflection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,6 +45,15 @@ builder.Services.AddSwaggerGen(c =>
     c.AddSecurityRequirement(securityRequirement);
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:5500")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 
 //builder.WebHost.ConfigureKestrel(serverOptions =>
 //{
@@ -72,7 +82,10 @@ Log.Logger = new LoggerConfiguration()
 
 builder.Host.UseSerilog();
 ///------------------------------
-
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(Assembly.Load("UserService.Application"));
+});
 
 
 builder.Services.AddControllers();

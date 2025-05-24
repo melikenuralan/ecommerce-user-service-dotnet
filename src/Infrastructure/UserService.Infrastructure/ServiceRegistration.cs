@@ -5,6 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using UserService.Application.Abstractions.IServices;
 using UserService.Infrastructure.Services;
+using UserService.Application.Abstractions.IExternalServices;
+using UserService.Infrastructure.ExternalServices;
 
 namespace UserService.Infrastructure
 {
@@ -15,6 +17,8 @@ namespace UserService.Infrastructure
             // Token Provider
             services.AddScoped<ITokenProvider, TokenProvider>();
             services.AddSingleton<ILogService, LogService>();
+            services.AddScoped<IGoogleAuthService, GoogleAuthService>();
+
 
             // JWT Authentication
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
