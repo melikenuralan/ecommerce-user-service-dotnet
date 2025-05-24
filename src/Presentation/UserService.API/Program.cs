@@ -4,6 +4,7 @@ using UserService.Infrastructure;
 using UserService.Application.Features.Commands.UserAuth.LoginUser;
 using UserService.Application.Features.Commands.UserAuth.RegisterUser;
 using Microsoft.OpenApi.Models;
+using UserService.API.Extensions;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -87,6 +88,7 @@ var app = builder.Build();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+app.ConfigureExceptionHandler<Program>(app.Services.GetRequiredService<ILogger<Program>>());
 
 app.UseHttpsRedirection();
 
