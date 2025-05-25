@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 using UserService.Application.Abstractions.IServices;
 using UserService.Application.DTOs;
+using UserService.Domain.Entities;
 using UserService.Persistence.Identity;
 
 namespace UserService.Persistence.Concretes.Services
@@ -16,7 +18,31 @@ namespace UserService.Persistence.Concretes.Services
             _tokenService = tokenService;
         }
 
+        public async Task AssignRoleToUserAsync(Guid userId, string[] roles)
+        {
+            AppUser? appUser = await _userManager.FindByIdAsync(userId.ToString());
+            if (appUser != null)
+            {
+                var userRoles = await _userManager.GetRolesAsync(appUser);
+                await _userManager.RemoveFromRolesAsync(appUser, userRoles);
+                await _userManager.AddToRolesAsync(appUser, roles);
+            }
+        }
+        public async Task<UserRoleDto> GetUserRoleByIdsAsync(Guid id)
+        {
+            AppUser appUser = await _userManager.FindByIdAsync(id.ToString());
 
+            var roles = await _userManager.GetRolesAsync(appUser);
+            var claims = roles.Select(role => new Claim(ClaimTypes.Role, role)).ToList();
+
+            return new UserRoleDto
+            {
+                UserId = id,
+                UserName = appUser.UserName,
+                Roles = roles,
+                Claims = claims
+            };
+        }
         public async Task<AuthResultDto> LoginAsync(LoginRequestDto request)
         {
             AppUser? appUser = await _userManager.FindByNameAsync(request.Username);

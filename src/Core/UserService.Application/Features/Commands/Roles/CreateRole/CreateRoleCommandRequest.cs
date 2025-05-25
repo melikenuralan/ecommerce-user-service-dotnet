@@ -1,6 +1,8 @@
-﻿namespace UserService.Application.Features.Commands.Roles.CreateRole
+﻿using MediatR;
+
+namespace UserService.Application.Features.Commands.Roles.CreateRole
 {
-    public class CreateRoleCommandRequest
+    public class CreateRoleCommandRequest : IRequest<CreateRoleCommandResponse>
     {
         public string Name { get; set; } = string.Empty;
     }

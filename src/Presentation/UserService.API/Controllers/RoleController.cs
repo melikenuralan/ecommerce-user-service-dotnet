@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using UserService.Application.Abstractions.IServices;
 using UserService.Application.DTOs;
+using UserService.Application.Features.Commands.Roles.AssignRoleToUser;
+using UserService.Application.Features.Queries.GetUserRoleById;
 
 namespace UserService.API.Controllers
 {
@@ -13,14 +17,30 @@ namespace UserService.API.Controllers
 
         private readonly IRoleService _roleService;
         private readonly ILogService _logger;
+        private readonly IMediator _mediator;
 
-        public RoleController(IRoleService roleService, ILogService logger)
+        public RoleController(IRoleService roleService, ILogService logger, IMediator mediator)
         {
             _roleService = roleService;
             _logger = logger;
+            _mediator = mediator;
         }
-
-        // POST: api/Roles
+        [HttpGet("{userId:guid}/roles")]
+        public async Task<IActionResult> GetUserRolesByIdAsync(
+         [FromRoute] GetUserRoleByIdQueryRequest request)
+        {
+            GetUserRoleByIdQueryResponse response =
+                await _mediator.Send(request);
+            return Ok(response);
+        }
+        [HttpPost("{userId:guid}/roles")]
+        public async Task<IActionResult> AssignRoleToUser(
+       [FromRoute] AssignRoleCommandRequest request)
+        {
+            AssignRoleCommandResponse response =
+                await _mediator.Send(request);
+            return Ok(response);
+        }
         [HttpPost]
         [ProducesResponseType(typeof(RoleDto), 201)]
         public async Task<ActionResult<RoleDto>> Create([FromBody] CreateRoleDto dto)
@@ -29,7 +49,6 @@ namespace UserService.API.Controllers
             return CreatedAtAction(nameof(GetByIdAsync), new { id = created.Id }, created);
         }
 
-        // PUT: api/Roles/{id}
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<RoleDto>> UpdateAsync(Guid id, [FromBody] UpdateRoleDto request)
         {
@@ -42,7 +61,6 @@ namespace UserService.API.Controllers
             return Ok(updated);
         }
 
-        // DELETE: api/Roles/{id}
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> DeleteAsync(Guid id)
         {
@@ -54,7 +72,6 @@ namespace UserService.API.Controllers
 
             return NoContent();
         }
-        // GET: api/Roles
         [HttpGet]
         public ActionResult<IList<RoleDto>> GetAllRoles()
         {
@@ -71,7 +88,6 @@ namespace UserService.API.Controllers
             return Ok(roles);
         }
 
-        // GET: api/Roles/{id}
         [HttpGet("{id:guid}")]
         [ProducesResponseType(404)]
         public async Task<ActionResult<RoleDto>> GetByIdAsync(Guid id)
