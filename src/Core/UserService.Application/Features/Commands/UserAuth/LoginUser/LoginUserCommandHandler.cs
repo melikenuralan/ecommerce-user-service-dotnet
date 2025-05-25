@@ -1,9 +1,10 @@
-﻿using UserService.Application.Abstractions.IServices;
+﻿using MediatR;
+using UserService.Application.Abstractions.IServices;
 using UserService.Application.DTOs;
 
 namespace UserService.Application.Features.Commands.UserAuth.LoginUser
 {
-    public class LoginUserCommandHandler
+    public class LoginUserCommandHandler : IRequestHandler<LoginUserCommandRequest, LoginUserCommandResponse>
     {
         private readonly IAuthService _authService;
         private readonly ILogService _logger;
@@ -14,11 +15,11 @@ namespace UserService.Application.Features.Commands.UserAuth.LoginUser
             _logger = logger;
         }
 
-        public async Task<LoginUserCommandResponse> HandleAsync(LoginUserCommandRequest request, CancellationToken cancellationToken)
+        public async Task<LoginUserCommandResponse> Handle(LoginUserCommandRequest request, CancellationToken cancellationToken)
         {
             _logger.Info($"[LOGIN] Giriş denemesi: {request.Username}");
 
-            var result = await _authService.LoginAsync(new LoginRequestDto
+            AuthResultDto result = await _authService.LoginAsync(new LoginRequestDto
             {
                 Username = request.Username,
                 Password = request.Password
@@ -34,6 +35,5 @@ namespace UserService.Application.Features.Commands.UserAuth.LoginUser
             _logger.Info($"[LOGIN] Başarılı giriş: {request.Username}");
             return LoginUserCommandResponse.SuccessResult(result.Token!);
         }
-
     }
 }

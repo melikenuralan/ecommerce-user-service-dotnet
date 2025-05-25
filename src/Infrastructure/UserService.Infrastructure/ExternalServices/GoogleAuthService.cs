@@ -1,6 +1,4 @@
-﻿using System.Data;
-using Google.Apis.Auth;
-using Microsoft.AspNetCore.Identity;
+﻿using Google.Apis.Auth;
 using Microsoft.Extensions.Configuration;
 using UserService.Application.Abstractions.IExternalServices;
 using UserService.Application.Abstractions.IServices;
@@ -25,7 +23,7 @@ namespace UserService.Infrastructure.ExternalServices
 
         public async Task<GoogleLoginResultDto> LoginAsync(string idToken)
         {
-            var payload = await ValidateAsync(idToken);
+            GooglePayload payload = await ValidateAsync(idToken);
 
             var userDto = await _userManagementService.FindByExternalLoginAsync(payload.Provider, payload.Subject)
                          ?? await _userManagementService.FindByEmailAsync(payload.Email);
@@ -47,7 +45,7 @@ namespace UserService.Infrastructure.ExternalServices
             }
 
             var roles = await _userManagementService.GetRolesAsync(userDto.Id);
-        //    userDto.Roles = roles;
+            //    userDto.Roles = roles;
 
             var token = _tokenProvider.GenerateToken(
                 minute: 60,

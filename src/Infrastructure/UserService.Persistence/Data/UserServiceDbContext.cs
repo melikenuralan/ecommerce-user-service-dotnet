@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Entities;
-using UserService.Domain.ValueObjects;
 using UserService.Persistence.Identity;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace UserService.Persistence.Data
 {

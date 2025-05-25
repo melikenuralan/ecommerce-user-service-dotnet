@@ -1,10 +1,10 @@
-﻿using UserService.Application.Abstractions.IServices;
+﻿using MediatR;
+using UserService.Application.Abstractions.IServices;
 using UserService.Application.DTOs;
-using UserService.Domain.ValueObjects;
 
 namespace UserService.Application.Features.Commands.UserAuth.RegisterUser
 {
-    public class RegisterUserCommandHandler
+    public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommandRequest, RegisterUserCommandResponse>
     {
         private readonly IAuthService _authService;
         private readonly ILogService _logger;
@@ -15,11 +15,11 @@ namespace UserService.Application.Features.Commands.UserAuth.RegisterUser
             _logger = logger;
         }
 
-        public async Task<RegisterUserCommandResponse> HandleAsync(RegisterUserCommandRequest request, CancellationToken cancellationToken)
+        public async Task<RegisterUserCommandResponse> Handle(RegisterUserCommandRequest request, CancellationToken cancellationToken)
         {
             _logger.Info($"[REGISTER] Yeni kullanıcı kayıt denemesi: {request.Username}");
 
-            var response = await _authService.RegisterAsync(new()
+            AuthResultDto response = await _authService.RegisterAsync(new()
             {
                 Email = request.Email,
                 FullName = request.FullName,

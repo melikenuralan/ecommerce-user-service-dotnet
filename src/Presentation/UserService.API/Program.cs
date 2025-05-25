@@ -1,11 +1,11 @@
-using UserService.Persistence;
+using System.Reflection;
+using Microsoft.OpenApi.Models;
 using Serilog;
-using UserService.Infrastructure;
+using UserService.API.Extensions;
 using UserService.Application.Features.Commands.UserAuth.LoginUser;
 using UserService.Application.Features.Commands.UserAuth.RegisterUser;
-using Microsoft.OpenApi.Models;
-using UserService.API.Extensions;
-using System.Reflection;
+using UserService.Infrastructure;
+using UserService.Persistence;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -100,7 +100,7 @@ app.UseCors("LocalOrigins");
 app.UseStaticFiles();
 
 if (app.Environment.IsDevelopment())
- {
+{
     app.UseSwagger();
     app.UseSwaggerUI();
 }

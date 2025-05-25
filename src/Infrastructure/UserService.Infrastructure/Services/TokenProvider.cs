@@ -6,7 +6,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using UserService.Application.Abstractions.IServices;
 using UserService.Application.DTOs;
-using UserService.Domain.Entities;
 
 
 namespace UserService.Infrastructure.Services
@@ -21,9 +20,9 @@ namespace UserService.Infrastructure.Services
         }
         public TokenDto GenerateToken(int minute, string userId, string userName, IList<string> roles)
         {
-            var key = Encoding.ASCII.GetBytes(_configuration["Token:SecurityKey"]);
+            byte[] key = Encoding.ASCII.GetBytes(_configuration["Token:SecurityKey"]);
 
-            var claims = new List<Claim>
+            List<Claim> claims = new List<Claim>
                                 {
                                     new Claim(ClaimTypes.NameIdentifier, userId),
                                     new Claim(ClaimTypes.Name, userName)
@@ -31,7 +30,7 @@ namespace UserService.Infrastructure.Services
 
             claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
-            var tokenDescriptor = new SecurityTokenDescriptor
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.Now.AddMinutes(minute),
@@ -40,8 +39,8 @@ namespace UserService.Infrastructure.Services
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
-            var handler = new JwtSecurityTokenHandler();
-            var token = handler.CreateToken(tokenDescriptor);
+            JwtSecurityTokenHandler handler = new JwtSecurityTokenHandler();
+            SecurityToken token = handler.CreateToken(tokenDescriptor);
 
             return new TokenDto
             {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UserService.Domain.Common;
+﻿using UserService.Domain.Common;
 using UserService.Domain.ValueObjects;
 
 namespace UserService.Domain.Entities

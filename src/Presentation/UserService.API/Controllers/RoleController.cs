@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
 using UserService.Application.Abstractions.IServices;
 using UserService.Application.DTOs;
 
@@ -9,7 +7,7 @@ namespace UserService.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-  //  [Authorize(AuthenticationSchemes = "Admin")]
+    //  [Authorize(AuthenticationSchemes = "Admin")]
     public class RoleController : ControllerBase
     {
 

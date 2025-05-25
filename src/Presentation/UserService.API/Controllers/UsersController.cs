@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.AspNetCore.Mvc;
 using UserService.Domain.Interfaces;
 
 namespace UserService.API.Controllers
@@ -9,7 +7,7 @@ namespace UserService.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-        
+
         private readonly IUserRepository _userRepository;
 
         public UsersController(IUserRepository userRepository)

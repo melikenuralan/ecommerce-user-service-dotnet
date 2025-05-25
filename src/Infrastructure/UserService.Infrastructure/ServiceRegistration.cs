@@ -1,12 +1,12 @@
 ﻿using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using UserService.Application.Abstractions.IServices;
-using UserService.Infrastructure.Services;
 using UserService.Application.Abstractions.IExternalServices;
+using UserService.Application.Abstractions.IServices;
 using UserService.Infrastructure.ExternalServices;
+using UserService.Infrastructure.Services;
 
 namespace UserService.Infrastructure
 {

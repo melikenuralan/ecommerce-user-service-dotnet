@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using UserService.Domain.ValueObjects;
+﻿using MediatR;
 
 namespace UserService.Application.Features.Commands.UserAuth.RegisterUser
 {
-    public class RegisterUserCommandRequest
+    public class RegisterUserCommandRequest : IRequest<RegisterUserCommandResponse>
     {
         public string FullName { get; set; }
         public string Username { get; set; }
