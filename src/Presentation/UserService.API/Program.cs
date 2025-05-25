@@ -62,15 +62,18 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "AllowSwagger",
-        policy =>
-        {
-            policy
-              .WithOrigins("http://localhost:5000", "https://localhost:5001")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
-        });
+    options.AddPolicy("LocalOrigins", policy =>
+    {
+        policy
+          .WithOrigins(
+            "http://localhost:5500",     // Google-login.html’i çalýþtýrdýðýnýz origin
+            "https://localhost:7277"     // Swagger UI (opsiyonel, ayný origin olduðu için genelde gerekmez)
+          )
+          .AllowAnyHeader()
+          .AllowAnyMethod();
+    });
 });
+
 
 ///serilog configuration --------
 Log.Logger = new LoggerConfiguration()
@@ -93,13 +96,22 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+app.UseCors("LocalOrigins");
+app.UseStaticFiles();
 
-
-
- if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
  {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();   // <-- Bu satýrý ekleyin veya aktif edin
+}
+else
+{
+    app.UseExceptionHandler("/error"); // Prod için halihazýrdaki handler
 }
 app.ConfigureExceptionHandler<Program>(app.Services.GetRequiredService<ILogger<Program>>());
 

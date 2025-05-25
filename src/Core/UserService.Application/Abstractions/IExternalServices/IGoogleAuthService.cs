@@ -9,6 +9,7 @@ namespace UserService.Application.Abstractions.IExternalServices
 {
     public interface IGoogleAuthService
     {
-        Task<GooglePayload> ValidateAsync(string idToken);
+        Task<GoogleLoginResultDto> LoginAsync(string idToken);
     }
+
 }
