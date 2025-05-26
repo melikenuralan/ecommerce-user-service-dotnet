@@ -17,11 +17,11 @@ namespace UserService.Application.Features.Commands.UserAuth.LoginUser
 
         public async Task<LoginUserCommandResponse> Handle(LoginUserCommandRequest request, CancellationToken cancellationToken)
         {
-            _logger.Info($"[LOGIN] Giriş denemesi: {request.Username}");
+            _logger.Info($"[LOGIN] Giriş denemesi: {request.UsernameOrEmail}");
 
             AuthResultDto result = await _authService.LoginAsync(new LoginRequestDto
             {
-                Username = request.Username,
+                UsernameOrEmail = request.UsernameOrEmail,
                 Password = request.Password
             });
 
@@ -32,7 +32,7 @@ namespace UserService.Application.Features.Commands.UserAuth.LoginUser
                 return LoginUserCommandResponse.Fail(message);
             }
 
-            _logger.Info($"[LOGIN] Başarılı giriş: {request.Username}");
+            _logger.Info($"[LOGIN] Başarılı giriş: {request.UsernameOrEmail}");
             return LoginUserCommandResponse.SuccessResult(result.Token!);
         }
     }

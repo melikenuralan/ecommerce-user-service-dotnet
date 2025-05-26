@@ -10,12 +10,14 @@ namespace UserService.Persistence.Concretes.Services
     public class AuthService : IAuthService
     {
         private readonly UserManager<AppUser> _userManager;
+        private readonly SignInManager<AppUser> _signInManager;
         private readonly ITokenProvider _tokenService;
 
-        public AuthService(UserManager<AppUser> userManager, ITokenProvider tokenService)
+        public AuthService(UserManager<AppUser> userManager, ITokenProvider tokenService, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
             _tokenService = tokenService;
+            _signInManager = signInManager;
         }
 
         public async Task AssignRoleToUserAsync(Guid userId, string[] roles)
@@ -45,11 +47,16 @@ namespace UserService.Persistence.Concretes.Services
         }
         public async Task<AuthResultDto> LoginAsync(LoginRequestDto request)
         {
-            AppUser? appUser = await _userManager.FindByNameAsync(request.Username);
-            if (appUser == null)
+            AppUser? appUser = await _userManager.FindByNameAsync(request.UsernameOrEmail)
+                            ?? await _userManager.FindByEmailAsync(request.UsernameOrEmail);
+
+            if (appUser is null)
                 return AuthResultDto.Failure("Kullanıcı adı veya şifre hatalı.");
-            bool passwordValid = await _userManager.CheckPasswordAsync(appUser, request.Password);
-            if (!passwordValid)
+
+            SignInResult signInResult = await _signInManager
+            .CheckPasswordSignInAsync(appUser, request.Password, lockoutOnFailure: false);
+
+            if (!signInResult.Succeeded)
                 return AuthResultDto.Failure("Kullanıcı adı veya şifre hatalı.");
 
             IList<string> roles = await _userManager.GetRolesAsync(appUser);

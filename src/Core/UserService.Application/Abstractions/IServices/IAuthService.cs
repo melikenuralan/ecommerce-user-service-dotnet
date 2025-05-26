@@ -9,6 +9,5 @@ namespace UserService.Application.Abstractions.IServices
         Task<AuthResultDto> LoginAsync(LoginRequestDto request);
         Task AssignRoleToUserAsync(Guid userId, string[] roles);
         Task<UserRoleDto> GetUserRoleByIdsAsync(Guid id);
-
     }
 }
