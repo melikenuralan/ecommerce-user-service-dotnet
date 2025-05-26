@@ -14,10 +14,11 @@ namespace UserService.Infrastructure
     {
         public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            // Token Provider
+           
             services.AddScoped<ITokenProvider, TokenProvider>();
             services.AddSingleton<ILogService, LogService>();
             services.AddScoped<IGoogleAuthService, GoogleAuthService>();
+            services.AddScoped<ITwoFactorAuthenticatorService, TwoFactorAuthenticatorService>();
 
 
             // JWT Authentication

@@ -13,6 +13,20 @@ namespace UserService.Persistence.Concretes.Services
         {
             _userManager = userManager;
         }
+        public async Task ResetAuthenticatorKeyAsync(Guid userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString())
+                       ?? throw new Exception("Kullanıcı bulunamadı.");
+            await _userManager.ResetAuthenticatorKeyAsync(user);
+        }
+
+        public async Task<string?> GetAuthenticatorKeyAsync(Guid userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString())
+                       ?? throw new Exception("Kullanıcı bulunamadı.");
+            return await _userManager.GetAuthenticatorKeyAsync(user);
+        }
+
 
         public async Task<AppUserDto> FindByEmailAsync(string email)
         {
