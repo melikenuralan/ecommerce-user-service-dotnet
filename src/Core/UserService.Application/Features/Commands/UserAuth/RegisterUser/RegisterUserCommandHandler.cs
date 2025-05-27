@@ -25,7 +25,8 @@ namespace UserService.Application.Features.Commands.UserAuth.RegisterUser
                 FullName = request.FullName,
                 Password = request.Password,
                 PasswordConfirm = request.PasswordConfirm,
-                Username = request.Username
+                Username = request.Username,
+                TwoFactorType = request.TwoFactorType
             });
 
             if (!response.Succeeded)

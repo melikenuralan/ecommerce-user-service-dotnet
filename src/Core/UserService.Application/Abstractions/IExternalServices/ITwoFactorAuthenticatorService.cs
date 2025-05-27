@@ -11,5 +11,6 @@ namespace UserService.Application.Abstractions.IExternalServices
     {
         Task<string> GenerateSharedKey(Guid userId);
         Task<string> GenerateQrCodeUri(string sharedKey, string title, AppUserDto user);
+        Task<(bool IsVerified, IEnumerable<string>? RecoveryCodes)> VerifyAuthenticatorCodeAsync(Guid userId, string verificationCode);
     }
 }

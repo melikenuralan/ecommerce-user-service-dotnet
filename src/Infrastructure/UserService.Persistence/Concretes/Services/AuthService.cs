@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using UserService.Application.Abstractions.IServices;
 using UserService.Application.DTOs;
 using UserService.Domain.Entities;
+using UserService.Domain.Enums;
 using UserService.Persistence.Identity;
 
 namespace UserService.Persistence.Concretes.Services
@@ -32,7 +33,10 @@ namespace UserService.Persistence.Concretes.Services
         }
         public async Task<UserRoleDto> GetUserRoleByIdsAsync(Guid id)
         {
-            AppUser appUser = await _userManager.FindByIdAsync(id.ToString());
+            AppUser? appUser = await _userManager.FindByIdAsync(id.ToString());
+
+            if (appUser is null)
+                throw new Exception("Kullanıcı bulunamadı.");
 
             var roles = await _userManager.GetRolesAsync(appUser);
             var claims = roles.Select(role => new Claim(ClaimTypes.Role, role)).ToList();
@@ -45,19 +49,26 @@ namespace UserService.Persistence.Concretes.Services
                 Claims = claims
             };
         }
+
         public async Task<AuthResultDto> LoginAsync(LoginRequestDto request)
         {
             AppUser? appUser = await _userManager.FindByNameAsync(request.UsernameOrEmail)
-                            ?? await _userManager.FindByEmailAsync(request.UsernameOrEmail);
+                             ?? await _userManager.FindByEmailAsync(request.UsernameOrEmail);
 
             if (appUser is null)
                 return AuthResultDto.Failure("Kullanıcı adı veya şifre hatalı.");
 
             SignInResult signInResult = await _signInManager
-            .CheckPasswordSignInAsync(appUser, request.Password, lockoutOnFailure: false);
+                .CheckPasswordSignInAsync(appUser, request.Password, lockoutOnFailure: false);
 
             if (!signInResult.Succeeded)
                 return AuthResultDto.Failure("Kullanıcı adı veya şifre hatalı.");
+
+            if (await _userManager.GetTwoFactorEnabledAsync(appUser))
+            {
+                return AuthResultDto.Require2FA(appUser.TwoFactorType);
+            }
+
 
             IList<string> roles = await _userManager.GetRolesAsync(appUser);
 
@@ -70,6 +81,7 @@ namespace UserService.Persistence.Concretes.Services
 
             return AuthResultDto.Success(token);
         }
+
         private string GenerateReferralCode()
         {
             return Guid.NewGuid().ToString("N")[..8].ToUpper();

@@ -13,6 +13,58 @@ namespace UserService.Persistence.Concretes.Services
         {
             _userManager = userManager;
         }
+        public async Task<AppUserDto> FindByIdAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                throw new Exception("Kullanıcı bulunamadı.");
+
+            return new AppUserDto
+            {
+                Id = user.Id,
+                Email = user.Email,
+                UserName = user.UserName,
+              //  ReferralCode = user.ReferralCode,
+                TwoFactorType = user.TwoFactorType,
+                TwoFactorEnabled = user.TwoFactorEnabled,
+
+            };
+        }
+
+        public async Task<bool> VerifyAuthenticatorCodeAsync(AppUserDto userDto, string verificationCode)
+        {
+            var user = await _userManager.FindByIdAsync(userDto.Id.ToString())
+                       ?? throw new Exception("Kullanıcı bulunamadı.");
+
+            return await _userManager.VerifyTwoFactorTokenAsync(
+                user,
+                _userManager.Options.Tokens.AuthenticatorTokenProvider,
+                verificationCode);
+        }
+
+        public async Task<IEnumerable<string>> GenerateNewTwoFactorRecoveryCodesAsync(AppUserDto userDto, int number)
+        {
+            var user = await _userManager.FindByIdAsync(userDto.Id.ToString())
+                       ?? throw new Exception("Kullanıcı bulunamadı.");
+
+            return await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, number);
+        }
+
+
+        public async Task UpdateAsync(AppUserDto userDto)
+        {
+            var user = await _userManager.FindByIdAsync(userDto.Id.ToString())
+                       ?? throw new Exception("Kullanıcı bulunamadı.");
+
+            user.Email = userDto.Email;
+            user.UserName = userDto.UserName;
+          //  user.ReferralCode = userDto.ReferralCode;
+            user.TwoFactorType = userDto.TwoFactorType;
+            user.TwoFactorEnabled=userDto.TwoFactorEnabled;
+
+            await _userManager.UpdateAsync(user);
+        }
+
         public async Task ResetAuthenticatorKeyAsync(Guid userId)
         {
             var user = await _userManager.FindByIdAsync(userId.ToString())
@@ -83,7 +135,9 @@ namespace UserService.Persistence.Concretes.Services
             {
                 Id = user.Id,
                 Email = user.Email,
-                UserName = user.UserName
+                UserName = user.UserName,
+                TwoFactorType = user.TwoFactorType,
+                TwoFactorEnabled=user.TwoFactorEnabled,
             };
         }
     }

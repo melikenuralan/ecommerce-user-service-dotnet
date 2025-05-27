@@ -9,7 +9,7 @@ namespace UserService.Application.Features.Commands.UserAuth.LoginUser
         private readonly IAuthService _authService;
         private readonly ILogService _logger;
 
-        public LoginUserCommandHandler(IAuthService authService, ILogService logger = null)
+        public LoginUserCommandHandler(IAuthService authService, ILogService logger)
         {
             _authService = authService;
             _logger = logger;
@@ -24,6 +24,18 @@ namespace UserService.Application.Features.Commands.UserAuth.LoginUser
                 UsernameOrEmail = request.UsernameOrEmail,
                 Password = request.Password
             });
+
+            if (result.RequiresTwoFactor)
+            {
+                _logger.Info($"[LOGIN] 2FA gerekli: {request.UsernameOrEmail}");
+                return new LoginUserCommandResponse
+                {
+                    Succeess = false,
+                    Message = "İki adımlı doğrulama gerekli.",
+                    RequiresTwoFactor = true,
+                    TwoFactorType = result.TwoFactorType
+                };
+            }
 
             if (!result.Succeeded)
             {

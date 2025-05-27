@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using UserService.Application.Abstractions.IExternalServices;
 using UserService.Application.Abstractions.IServices;
 using UserService.Application.DTOs;
@@ -34,5 +35,21 @@ namespace UserService.Infrastructure.ExternalServices
         }
         public async Task<string> GenerateQrCodeUri(string sharedKey, string title, AppUserDto user) =>
         $"otpauth://totp/{_urlEncoder.Encode(title)}:{_urlEncoder.Encode(user.Email)}?secret={sharedKey}&issuer={_urlEncoder.Encode(title)}";
+        public async Task<(bool IsVerified, IEnumerable<string>? RecoveryCodes)> VerifyAuthenticatorCodeAsync(Guid userId, string verificationCode)
+        {
+            var user = await _userManagementService.FindByIdAsync(userId.ToString());
+            if (user == null)
+                return (false, null);
+            bool isValid = await _userManagementService.VerifyAuthenticatorCodeAsync(user , verificationCode);
+            if (!isValid)
+                return (false, null);
+
+            user.TwoFactorEnabled = true;
+            await _userManagementService.UpdateAsync(user);
+
+            var recoveryCodes = await _userManagementService.GenerateNewTwoFactorRecoveryCodesAsync(user, 5);
+            return (true, recoveryCodes);
+        }
+
     }
 }

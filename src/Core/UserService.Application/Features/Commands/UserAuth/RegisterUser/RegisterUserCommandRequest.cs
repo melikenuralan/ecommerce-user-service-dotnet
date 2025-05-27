@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using UserService.Domain.Enums;
 
 namespace UserService.Application.Features.Commands.UserAuth.RegisterUser
 {
@@ -9,5 +10,6 @@ namespace UserService.Application.Features.Commands.UserAuth.RegisterUser
         public string Email { get; set; }
         public string Password { get; set; }
         public string PasswordConfirm { get; set; }
+        public TwoFactorType TwoFactorType { get; set; }
     }
 }

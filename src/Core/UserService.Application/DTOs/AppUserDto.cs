@@ -1,4 +1,6 @@
-﻿namespace UserService.Application.DTOs
+﻿using UserService.Domain.Enums;
+
+namespace UserService.Application.DTOs
 {
     public class AppUserDto
     {
@@ -7,5 +9,8 @@
         public string UserName { get; set; }
         //    public IList<string> Roles { get; set; }
         public string ReferralCode { get; set; }
+        public TwoFactorType TwoFactorType { get; set; }
+        public bool TwoFactorEnabled { get; set; }
+
     }
 }

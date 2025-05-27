@@ -25,7 +25,7 @@ namespace UserService.API.Controllers
             _logger = logger;
             _mediator = mediator;
         }
-        [HttpGet("{userId:guid}/roles")]
+        [HttpGet("GetUserRolesById")]
         public async Task<IActionResult> GetUserRolesByIdAsync(
          [FromRoute] GetUserRoleByIdQueryRequest request)
         {
@@ -33,14 +33,14 @@ namespace UserService.API.Controllers
                 await _mediator.Send(request);
             return Ok(response);
         }
-        [HttpPost("{userId:guid}/roles")]
+        [HttpPost("assign-role")]
         public async Task<IActionResult> AssignRoleToUser(
-       [FromRoute] AssignRoleCommandRequest request)
+      [FromBody] AssignRoleCommandRequest request)
         {
-            AssignRoleCommandResponse response =
-                await _mediator.Send(request);
+            var response = await _mediator.Send(request);
             return Ok(response);
         }
+
         [HttpPost]
         [ProducesResponseType(typeof(RoleDto), 201)]
         public async Task<ActionResult<RoleDto>> Create([FromBody] CreateRoleDto dto)

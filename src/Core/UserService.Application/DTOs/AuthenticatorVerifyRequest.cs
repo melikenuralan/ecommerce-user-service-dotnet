@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MediatR;
 
-namespace UserService.Application.Features.Queries.GetUserRoleById
+namespace UserService.Application.DTOs
 {
-    public class GetUserRoleByIdQueryRequest : IRequest<GetUserRoleByIdQueryResponse>
+    public class AuthenticatorVerifyRequest
     {
         public Guid UserId { get; set; }
+        public string VerificationCode { get; set; }
     }
+
 }
