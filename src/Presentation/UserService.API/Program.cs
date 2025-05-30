@@ -49,11 +49,13 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("LocalOrigins", policy =>
     {
-        policy.WithOrigins("http://localhost:5500", "https://localhost:7277")
+        policy.WithOrigins("http://localhost:5173") // React dev server
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
 });
+
+
 
 ///serilog configuration --------
 Log.Logger = new LoggerConfiguration()
