@@ -4,6 +4,7 @@ using UserService.API.Extensions;
 using UserService.Infrastructure;
 using UserService.Persistence;
 using UserService.Application;
+using System.Text.Json;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -54,6 +55,12 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod();
     });
 });
+builder.Services
+    .AddControllers()
+    .AddJsonOptions(opt =>
+    {
+        opt.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+    });
 
 
 
