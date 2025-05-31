@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using UserService.Application.Abstractions;
 using UserService.Application.Abstractions.IServices;
 using UserService.Application.DTOs;
 
@@ -8,15 +9,24 @@ namespace UserService.Application.Features.Commands.UserAuth.LoginUser
     {
         private readonly IAuthService _authService;
         private readonly ILogService _logger;
+        private readonly ICaptchaService _captchaService;
 
-        public LoginUserCommandHandler(IAuthService authService, ILogService logger)
+        public LoginUserCommandHandler(IAuthService authService, ILogService logger, ICaptchaService captchaService)
         {
             _authService = authService;
             _logger = logger;
+            _captchaService = captchaService;
         }
 
         public async Task<LoginUserCommandResponse> Handle(LoginUserCommandRequest request, CancellationToken cancellationToken)
         {
+            // reCAPTCHA doğrulama
+            var isHuman = await _captchaService.VerifyTokenAsync(request.RecaptchaToken);
+            if (!isHuman)
+            {
+                _logger.Warning($"[LOGIN] reCAPTCHA doğrulaması başarısız: {request.UsernameOrEmail}");
+                return LoginUserCommandResponse.Fail("reCAPTCHA doğrulaması geçersiz.");
+            }          
             _logger.Info($"[LOGIN] Giriş denemesi: {request.UsernameOrEmail}");
 
             AuthResultDto result = await _authService.LoginAsync(new LoginRequestDto

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using UserService.Application.Abstractions;
 using UserService.Application.Abstractions.IExternalServices;
 using UserService.Application.Abstractions.IServices;
 using UserService.Infrastructure.ExternalServices;
@@ -20,6 +21,7 @@ namespace UserService.Infrastructure
             services.AddSingleton<ILogService, LogService>();
             services.AddScoped<IGoogleAuthService, GoogleAuthService>();
             services.AddScoped<ITwoFactorAuthenticatorService, TwoFactorAuthenticatorService>();
+            services.AddHttpClient<ICaptchaService,CaptchaService>();
 
             services.AddAuthentication("Admin")
                 .AddJwtBearer("Admin", options =>

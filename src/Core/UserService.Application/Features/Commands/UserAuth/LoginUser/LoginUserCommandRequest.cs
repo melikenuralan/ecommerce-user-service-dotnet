@@ -6,5 +6,6 @@ namespace UserService.Application.Features.Commands.UserAuth.LoginUser
     {
         public string UsernameOrEmail { get; set; }
         public string Password { get; set; }
+        public string RecaptchaToken { get; set; }
     }
 }
