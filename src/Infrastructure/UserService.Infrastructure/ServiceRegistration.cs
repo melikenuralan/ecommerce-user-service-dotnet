@@ -1,12 +1,12 @@
-﻿using System.Security.Claims;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
 using UserService.Application.Abstractions;
 using UserService.Application.Abstractions.IExternalServices;
 using UserService.Application.Abstractions.IServices;
+using UserService.Application.Abstractions.Messaging;
 using UserService.Infrastructure.ExternalServices;
 using UserService.Infrastructure.Services;
 
@@ -22,6 +22,7 @@ namespace UserService.Infrastructure
             services.AddScoped<IGoogleAuthService, GoogleAuthService>();
             services.AddScoped<ITwoFactorAuthenticatorService, TwoFactorAuthenticatorService>();
             services.AddHttpClient<ICaptchaService,CaptchaService>();
+            services.AddSingleton<IEventPublisher, RabbitMQPublisher>();
 
             services.AddAuthentication("Admin")
                 .AddJwtBearer("Admin", options =>
