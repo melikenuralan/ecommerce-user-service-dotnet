@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using UserService.Application.Abstractions.IExternalServices;
 using UserService.Application.Abstractions.IServices;
-using UserService.Application.DTOs;
+using UserService.Application.DTOs.Identity;
 using UserService.Domain.Entities;
 
 namespace UserService.Infrastructure.ExternalServices

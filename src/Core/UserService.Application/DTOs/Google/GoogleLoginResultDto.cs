@@ -1,4 +1,6 @@
-﻿namespace UserService.Application.DTOs
+﻿using UserService.Application.DTOs.Auth;
+
+namespace UserService.Application.DTOs.Google
 {
     public class GoogleLoginResultDto
     {

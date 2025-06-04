@@ -1,6 +1,6 @@
 ﻿using UserService.Domain.Enums;
 
-namespace UserService.Application.DTOs
+namespace UserService.Application.DTOs.Auth
 {
     public class AuthResultDto
     {

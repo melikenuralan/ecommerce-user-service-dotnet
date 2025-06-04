@@ -2,6 +2,7 @@
 using UserService.Application.Abstractions;
 using UserService.Application.Abstractions.IServices;
 using UserService.Application.DTOs;
+using UserService.Application.DTOs.Auth;
 
 namespace UserService.Application.Features.Commands.UserAuth.LoginUser
 {

@@ -1,6 +1,6 @@
 ﻿using UserService.Domain.Enums;
 
-namespace UserService.Application.DTOs
+namespace UserService.Application.DTOs.Identity
 {
     public class AppUserDto
     {

@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using UserService.Application.Abstractions;
-using UserService.Application.DTOs;
+using UserService.Application.DTOs.Captcha;
 
 namespace UserService.Infrastructure.ExternalServices
 {

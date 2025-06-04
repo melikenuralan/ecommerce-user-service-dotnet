@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System;
 using System.Text.Json.Serialization;
 
-namespace UserService.Application.DTOs
+namespace UserService.Application.DTOs.Captcha
 {
     public class ReCaptchaResponse
     {

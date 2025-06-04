@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UserService.Domain.Enums;
 
-namespace UserService.Application.DTOs
+namespace UserService.Application.DTOs.TwoFactor
 {
     public class TwoFactorTypeSelectDto
     {

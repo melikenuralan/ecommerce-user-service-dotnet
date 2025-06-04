@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using UserService.Application.Abstractions.IExternalServices;
 using UserService.Application.Abstractions.IServices;
 using UserService.Application.DTOs;
+using UserService.Application.DTOs.Identity;
+using UserService.Application.DTOs.TwoFactor;
 using UserService.Domain.Enums;
 using UserService.Persistence.Identity;
 

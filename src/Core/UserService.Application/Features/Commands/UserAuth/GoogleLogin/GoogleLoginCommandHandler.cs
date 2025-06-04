@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using UserService.Application.Abstractions.IExternalServices;
-using UserService.Application.DTOs;
+using UserService.Application.DTOs.Google;
 
 namespace UserService.Application.Features.Commands.UserAuth.GoogleLogin
 {

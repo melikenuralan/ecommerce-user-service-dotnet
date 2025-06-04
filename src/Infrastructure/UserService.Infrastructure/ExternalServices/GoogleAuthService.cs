@@ -3,6 +3,8 @@ using Microsoft.Extensions.Configuration;
 using UserService.Application.Abstractions.IExternalServices;
 using UserService.Application.Abstractions.IServices;
 using UserService.Application.DTOs;
+using UserService.Application.DTOs.Google;
+using UserService.Application.DTOs.Identity;
 namespace UserService.Infrastructure.ExternalServices
 {
     public class GoogleAuthService : IGoogleAuthService

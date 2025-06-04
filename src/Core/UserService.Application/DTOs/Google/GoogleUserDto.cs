@@ -1,4 +1,4 @@
-﻿namespace UserService.Application.DTOs
+﻿namespace UserService.Application.DTOs.Google
 {
     public class GoogleUserDto
     {

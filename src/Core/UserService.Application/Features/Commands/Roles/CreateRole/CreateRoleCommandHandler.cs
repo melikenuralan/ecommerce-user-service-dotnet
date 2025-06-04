@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using UserService.Application.Abstractions.IServices;
-using UserService.Application.DTOs;
+using UserService.Application.DTOs.Role;
 
 namespace UserService.Application.Features.Commands.Roles.CreateRole
 {

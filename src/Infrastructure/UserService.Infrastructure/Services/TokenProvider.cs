@@ -5,7 +5,7 @@ using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using UserService.Application.Abstractions.IServices;
-using UserService.Application.DTOs;
+using UserService.Application.DTOs.Auth;
 
 
 namespace UserService.Infrastructure.Services

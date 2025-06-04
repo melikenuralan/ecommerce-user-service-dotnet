@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using Microsoft.AspNetCore.Identity;
 using UserService.Application.Abstractions.IServices;
-using UserService.Application.DTOs;
+using UserService.Application.DTOs.Role;
 using UserService.Persistence.Identity;
 
 namespace UserService.Persistence.Concretes.Services

@@ -1,4 +1,4 @@
-﻿using UserService.Application.DTOs;
+﻿using UserService.Application.DTOs.Auth;
 using UserService.Domain.Enums;
 
 namespace UserService.Application.Features.Commands.UserAuth.LoginUser

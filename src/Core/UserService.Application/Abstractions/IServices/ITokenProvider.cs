@@ -1,4 +1,4 @@
-﻿using UserService.Application.DTOs;
+﻿using UserService.Application.DTOs.Auth;
 
 
 

@@ -1,4 +1,4 @@
-﻿using UserService.Application.DTOs;
+﻿using UserService.Application.DTOs.Role;
 
 namespace UserService.Application.Abstractions.IServices
 {

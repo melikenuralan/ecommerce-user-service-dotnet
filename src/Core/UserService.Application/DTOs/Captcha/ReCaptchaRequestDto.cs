@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UserService.Application.DTOs
+namespace UserService.Application.DTOs.Captcha
 {
     public class ReCaptchaRequestDto
     {

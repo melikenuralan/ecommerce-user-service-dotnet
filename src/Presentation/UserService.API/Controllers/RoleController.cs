@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using UserService.Application.Abstractions.IServices;
-using UserService.Application.DTOs;
+using UserService.Application.DTOs.Role;
 using UserService.Application.Features.Commands.Roles.AssignRoleToUser;
 using UserService.Application.Features.Queries.GetUserRoleById;
 

@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UserService.Application.DTOs
+namespace UserService.Application.DTOs.Identity
 {
     public class UserRoleDto
     {

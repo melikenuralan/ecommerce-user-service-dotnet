@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using UserService.Application.Abstractions.IServices;
 using UserService.Application.DTOs;
+using UserService.Application.DTOs.Auth;
+using UserService.Application.DTOs.Identity;
 using UserService.Domain.Entities;
 using UserService.Domain.Enums;
 using UserService.Persistence.Identity;

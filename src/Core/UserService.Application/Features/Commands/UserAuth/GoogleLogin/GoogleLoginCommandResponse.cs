@@ -1,4 +1,5 @@
-﻿using UserService.Application.DTOs;
+﻿using UserService.Application.DTOs.Auth;
+using UserService.Application.DTOs.Google;
 
 namespace UserService.Application.Features.Commands.UserAuth.GoogleLogin
 {
