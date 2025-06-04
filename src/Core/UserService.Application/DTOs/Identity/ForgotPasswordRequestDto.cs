@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UserService.Application.Events
+namespace UserService.Application.DTOs.Identity
 {
-    public class UserCreatedEvent
+    public class ForgotPasswordRequestDto
     {
         public string Email { get; set; }
-        public string UserName { get; set; }
     }
 }

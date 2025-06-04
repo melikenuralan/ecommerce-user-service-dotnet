@@ -11,5 +11,7 @@ namespace UserService.Application.Abstractions.IServices
         Task<AuthResultDto> LoginAsync(LoginRequestDto request);
         Task AssignRoleToUserAsync(Guid userId, string[] roles);
         Task<UserRoleDto> GetUserRoleByIdsAsync(Guid id);
+        Task ProcessForgotPasswordAsync(string email,string resetLink);
+        Task<bool> ResetPasswordAsync(string email, string token, string newPassword);
     }
 }

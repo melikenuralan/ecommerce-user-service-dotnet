@@ -1,8 +1,8 @@
 ﻿using MediatR;
+using Shared.Contracts.Events.Users;
 using UserService.Application.Abstractions.IServices;
 using UserService.Application.Abstractions.Messaging;
 using UserService.Application.DTOs.Auth;
-using UserService.Application.Events;
 
 namespace UserService.Application.Features.Commands.UserAuth.RegisterUser
 {

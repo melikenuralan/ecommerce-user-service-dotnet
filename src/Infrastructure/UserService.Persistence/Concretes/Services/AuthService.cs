@@ -126,5 +126,25 @@ namespace UserService.Persistence.Concretes.Services
 
             return AuthResultDto.Success(token);
         }
+
+        public async Task ProcessForgotPasswordAsync(string email,string resetLink)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                throw new Exception("Kullanıcı bulunamadı.");
+
+            // Token üret
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        }
+
+        public async Task<bool> ResetPasswordAsync(string email, string token, string newPassword)
+        {
+            AppUser user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                throw new Exception("Kullanıcı bulunamadı.");
+
+            var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+            return result.Succeeded;
+        }
     }
 }

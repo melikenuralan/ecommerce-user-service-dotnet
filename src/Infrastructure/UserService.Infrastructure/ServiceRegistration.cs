@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MassTransit;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
@@ -22,7 +23,21 @@ namespace UserService.Infrastructure
             services.AddScoped<IGoogleAuthService, GoogleAuthService>();
             services.AddScoped<ITwoFactorAuthenticatorService, TwoFactorAuthenticatorService>();
             services.AddHttpClient<ICaptchaService,CaptchaService>();
-            services.AddSingleton<IEventPublisher, RabbitMQPublisher>();
+            services.AddScoped<IEventPublisher, MassTransitEventPublisher>();
+
+
+            services.AddMassTransit(x =>
+            {
+                x.UsingRabbitMq((context, cfg) =>
+                {
+                    cfg.Host("localhost", "/", h =>
+                    {
+                        h.Username("guest");
+                        h.Password("guest");
+                    });
+                });
+            });
+
 
             services.AddAuthentication("Admin")
                 .AddJwtBearer("Admin", options =>

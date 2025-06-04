@@ -98,7 +98,6 @@ namespace UserService.API.Controllers
             if (!isVerified)
                 return BadRequest("Doğrulama başarısız. Kod geçersiz veya süresi dolmuş olabilir.");
 
-            // ✅ Burada token üretiliyor
             var roles = await _userManager.GetRolesAsync(user);
             var token = _tokenProvider.GenerateToken(
                 60,
@@ -111,7 +110,7 @@ namespace UserService.API.Controllers
             {
                 message = "İki faktör doğrulama tamamlandı. Giriş başarılı.",
                 token = token,
-                recoveryCodes = recoveryCodes // ister göster, ister gösterme
+                recoveryCodes = recoveryCodes
             });
         }
 

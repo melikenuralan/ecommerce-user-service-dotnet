@@ -9,6 +9,12 @@
   <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   <EnvironmentName>Development</EnvironmentName>
 </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="Middlewares\**" />
+    <Content Remove="Middlewares\**" />
+    <EmbeddedResource Remove="Middlewares\**" />
+    <None Remove="Middlewares\**" />
+  </ItemGroup>
 
 
   <ItemGroup>
@@ -20,6 +26,7 @@
     <PackageReference Include="Serilog.Settings.Configuration" Version="9.0.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+    <PackageReference Include="Shared.Contracts" Version="1.0.0" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
@@ -27,10 +34,6 @@
     <ProjectReference Include="..\..\Core\UserService.Application\UserService.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\UserService.Persistence\UserService.Persistence.csproj" />
     <ProjectReference Include="..\..\Infrastructure\UserService.Infrastructure\UserService.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Middlewares\" />
   </ItemGroup>
 
 </Project>

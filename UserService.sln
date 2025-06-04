@@ -10,29 +10,30 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{827E0CD3-B72
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{8D626EA8-CB54-BC41-363A-217881BEBA6E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Domain", "src\Core\UserService.Domain\UserService.Domain.csproj", "{42874C0F-284F-4DCA-B9A2-BD42C8CE79E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService.Domain", "src\Core\UserService.Domain\UserService.Domain.csproj", "{42874C0F-284F-4DCA-B9A2-BD42C8CE79E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Application", "src\Core\UserService.Application\UserService.Application.csproj", "{ED34935C-7A47-4B74-9A67-9696CFEE100D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService.Application", "src\Core\UserService.Application\UserService.Application.csproj", "{ED34935C-7A47-4B74-9A67-9696CFEE100D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{9048EB7F-3875-A59E-E36B-5BD4C6F2A282}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Persistence", "src\Infrastructure\UserService.Persistence\UserService.Persistence.csproj", "{43F47D71-A120-476C-9119-D8553880474B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService.Persistence", "src\Infrastructure\UserService.Persistence\UserService.Persistence.csproj", "{43F47D71-A120-476C-9119-D8553880474B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.Infrastructure", "src\Infrastructure\UserService.Infrastructure\UserService.Infrastructure.csproj", "{B4C3A5F8-2B20-4B18-8485-B1DA3528A358}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService.Infrastructure", "src\Infrastructure\UserService.Infrastructure\UserService.Infrastructure.csproj", "{B4C3A5F8-2B20-4B18-8485-B1DA3528A358}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{6996BBF7-DB31-59BC-C7DD-9A7CCC6138C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.API", "src\Presentation\UserService.API\UserService.API.csproj", "{220463B4-55D0-456D-9BA4-EA787B803F2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService.API", "src\Presentation\UserService.API\UserService.API.csproj", "{220463B4-55D0-456D-9BA4-EA787B803F2F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B055C022-729C-4AD7-A673-75BABA5B2EFC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.UnitTests", "tests\UserService.UnitTests\UserService.UnitTests.csproj", "{BA538E20-DEFC-45DB-BE8E-877DC8804140}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService.UnitTests", "tests\UserService.UnitTests\UserService.UnitTests.csproj", "{BA538E20-DEFC-45DB-BE8E-877DC8804140}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserService.IntegrationTests", "tests\UserService.IntegrationTests\UserService.IntegrationTests.csproj", "{66BEF5A5-B523-4887-A075-E799D9575191}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserService.IntegrationTests", "tests\UserService.IntegrationTests\UserService.IntegrationTests.csproj", "{66BEF5A5-B523-4887-A075-E799D9575191}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Çözüm Öğeleri", "Çözüm Öğeleri", "{AC80F682-3D55-C8F8-4895-A4A9EDD49434}"
 	ProjectSection(SolutionItems) = preProject
 		docker-compose.yml = docker-compose.yml
+		nuget.config = nuget.config
 	EndProjectSection
 EndProject
 Global

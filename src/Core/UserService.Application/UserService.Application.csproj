@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.5.0" />
+    <PackageReference Include="Shared.Contracts" Version="1.0.0" />
   </ItemGroup>
 
   <PropertyGroup>
