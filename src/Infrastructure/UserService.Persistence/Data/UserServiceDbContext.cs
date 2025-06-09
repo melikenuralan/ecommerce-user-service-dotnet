@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using UserService.Domain.Entities;
-using UserService.Persistence.Identity;
 
 namespace UserService.Persistence.Data
 {
-    public class UserServiceDbContext : IdentityDbContext<AppUser, AppRole, Guid>
+    public class UserServiceDbContext : DbContext
     {
         public UserServiceDbContext(DbContextOptions<UserServiceDbContext> options) : base(options)
         {

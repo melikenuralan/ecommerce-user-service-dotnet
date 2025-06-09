@@ -1,16 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <Compile Remove="Features\Commands\UserAuth\RemoveUser\**" />
-    <Compile Remove="Features\Commands\UserAuth\UpdateUser\**" />
     <Compile Remove="Mappings\**" />
     <Compile Remove="Validators\**" />
-    <EmbeddedResource Remove="Features\Commands\UserAuth\RemoveUser\**" />
-    <EmbeddedResource Remove="Features\Commands\UserAuth\UpdateUser\**" />
     <EmbeddedResource Remove="Mappings\**" />
     <EmbeddedResource Remove="Validators\**" />
-    <None Remove="Features\Commands\UserAuth\RemoveUser\**" />
-    <None Remove="Features\Commands\UserAuth\UpdateUser\**" />
     <None Remove="Mappings\**" />
     <None Remove="Validators\**" />
   </ItemGroup>
@@ -22,6 +16,12 @@
   <ItemGroup>
     <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="Shared.Contracts" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Abstractions\" />
+    <Folder Include="Features\Commands\" />
+    <Folder Include="Features\Queries\" />
   </ItemGroup>
 
   <PropertyGroup>
