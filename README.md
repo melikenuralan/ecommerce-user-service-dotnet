@@ -1,2 +1,1 @@
 # ecommerce-user-service-dotnet
-UserService is an independent microservice responsible for user authentication, registration, and authorization within a distributed e-commerce system. It is built with ASP.NET Core, Entity Framework Core, and follows the Clean Architecture pattern, adhering to Domain-Driven Design (DDD) principles. Business rules related to users are modeled in the Domain layer, while secure identity management is implemented using ASP.NET Core Identity and JWT-based authentication.
