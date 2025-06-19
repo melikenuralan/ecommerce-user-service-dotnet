@@ -8,7 +8,7 @@ namespace UserService.Persistence.Data
         public UserServiceDbContext(DbContextOptions<UserServiceDbContext> options) : base(options)
         {
         }
-        public DbSet<User> DomainUsers { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<UserSettings> UserSettings { get; set; }
         public DbSet<BlockedUser> BlockedUsers { get; set; }

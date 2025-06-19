@@ -32,7 +32,7 @@ namespace UserService.Domain.Entities
             IsPhoneVerified = false;
             CreatedAt = DateTime.UtcNow;
 
-            Profile = new UserProfile(id, fullName, bio: null);
+            Profile = new UserProfile(id,bio: null);
             Settings = UserSettings.CreateDefault(id);
         }
 

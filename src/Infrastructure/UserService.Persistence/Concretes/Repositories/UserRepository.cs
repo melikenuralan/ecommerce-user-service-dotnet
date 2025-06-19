@@ -10,27 +10,27 @@ namespace UserService.Persistence.Concretes.Repositories
     {
         private readonly UserServiceDbContext _context;
         public UserRepository(UserServiceDbContext context) => _context = context;
-        public void AddUser(User user) => _context.DomainUsers.Add(user);
-        public void Remove(User user) => _context.DomainUsers.Remove(user);
-        public void Update(User user) => _context.DomainUsers.Update(user);
+        public void AddUser(User user) => _context.Users.Add(user);
+        public void Remove(User user) => _context.Users.Remove(user);
+        public void Update(User user) => _context.Users.Update(user);
 
         public async Task<bool> ExitAsync(Guid id)
         {
-            return await _context.DomainUsers
+            return await _context.Users
                 .AsNoTracking()
                 .AnyAsync(u => u.Id == id);
         }
 
         public async Task<User?> GetByEmailAsync(Email email)
         {
-            return await _context.DomainUsers
+            return await _context.Users
                 .AsNoTracking()
                 .FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<User?> GetById(Guid id)
         {
-            return await _context.DomainUsers
+            return await _context.Users
             .Include(u => u.BlockedUsers)
             .AsNoTracking()
             .FirstOrDefaultAsync(u => u.Id == id);
@@ -38,7 +38,9 @@ namespace UserService.Persistence.Concretes.Repositories
 
         public async Task AddAsync(User user)
         {
-            await _context.DomainUsers.AddAsync(user);
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync(); // bu şart
         }
+
     }
 }

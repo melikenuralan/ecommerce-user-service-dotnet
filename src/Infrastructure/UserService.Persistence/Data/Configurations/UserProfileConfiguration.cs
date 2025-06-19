@@ -16,18 +16,6 @@ namespace UserService.Persistence.Data.Configurations
                    .WithOne(u => u.Profile)
                    .HasForeignKey<UserProfile>(p => p.Id);
 
-            // VO: FullName
-            builder.OwnsOne(p => p.FullName, name =>
-            {
-                name.Property(n => n.FirstName)
-                    .HasColumnName("FirstName")
-                    .IsRequired()
-                    .HasMaxLength(100);
-                name.Property(n => n.LastName)
-                    .HasColumnName("LastName")
-                    .IsRequired()
-                    .HasMaxLength(100);
-            });
 
             // VO: Instagram
             builder.OwnsOne(p => p.Instagram, ig =>
