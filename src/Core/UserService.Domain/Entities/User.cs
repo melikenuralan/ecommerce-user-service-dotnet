@@ -1,4 +1,5 @@
 ﻿using UserService.Domain.Common;
+using UserService.Domain.DomainEvents;
 using UserService.Domain.ValueObjects;
 
 namespace UserService.Domain.Entities
@@ -14,6 +15,8 @@ namespace UserService.Domain.Entities
         public DateTime? LastLoginAt { get; private set; }
         public UserProfile Profile { get; private set; }
         public UserSettings Settings { get; private set; }
+        public bool IsBlocked { get; private set; }
+
 
 
         private readonly List<BlockedUser> _blockedUsers = new();
@@ -58,6 +61,26 @@ namespace UserService.Domain.Entities
                 return;
 
             _blockedUsers.Add(new BlockedUser(this.Id, blockedUserId));
+        }
+        public void Ban()
+        {
+            if (IsBlocked) return;
+
+            IsBlocked = true;
+
+            AddDomainEvent(new UserBlockedEvent(Id, DateTime.UtcNow));
+        }
+        public static User Register(Guid id, Email email, FullName fullName)
+        {
+            var user = new User(id, email, fullName);
+
+            user.AddDomainEvent(new UserRegisteredEvent(
+                user.Id,
+                user.Email.Value,
+                DateTime.UtcNow
+            ));
+
+            return user;
         }
     }
 }
